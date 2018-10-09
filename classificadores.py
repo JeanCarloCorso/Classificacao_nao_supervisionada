@@ -1,4 +1,5 @@
 from sklearn.cluster import KMeans
+from sklearn_extensions.fuzzy_kmeans import KMedians, FuzzyKMeans
 import numpy as np
 
 def PegaDados():
@@ -25,6 +26,12 @@ def k_means(dados):
 
     return kmeans
 
+def fuzzy_means(dados):
+    fuzzy_kmeans = FuzzyKMeans(k=2, m=2)
+    fuzzy_kmeans.fit(dados)
+    
+    return fuzzy_kmeans
+
 def main():
     dados, labels = PegaDados()
     kmeans = k_means(dados)
@@ -33,6 +40,12 @@ def main():
     print(labels)
     print()
     print("Acuracia: ",np.sum(labels == kmeans.labels_)/labels.shape[0])
+    fuzzy = fuzzy_means(dados)
+    print(fuzzy.labels_)
+    print()
+    print(labels)
+    print()
+    print("Acuracia: ",np.sum(labels == fuzzy.labels_)/labels.shape[0])
 
 main()
 
